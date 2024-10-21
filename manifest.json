@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "Quick ACL for Shopify",
+    "version": "1.0",
+    "description": "Simple app that will select all access rights for your Shopify ADMIN token",
+    "background": {
+      "service_worker": "quick-acl-for-shopify.js"
+    },
+    "permissions": []
+  }
