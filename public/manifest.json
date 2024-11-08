@@ -1,16 +1,20 @@
 {
-    "manifest_version": 3,
-    "name": "Quick ACL for Shopify",
-    "version": "1.0",
-    "description": "Simple app that will select all access rights for your Shopify ADMIN token",
-    "background": {
-      "service_worker": "main.js"
-    },
-    "permissions": [],
+  "manifest_version": 3,
+  "name": "Quick ACL for Shopify",
+  "version": "1.0",
+  "description": "Simple app that will select all access rights for your Shopify ADMIN token",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "action": {
+    "default_icon": "icon.png"
+  },
+
   "content_scripts": [
     {
-      "matches": ["https://*.shopify.com/*"],
-      "js": ["popup.js"]
+      "matches": [
+        "https://*.shopify.com/*/settings/apps/development/*/configuration/admin_api_integration"
+      ],
+      "js": ["main.js"],
+      "run_at": "document_idle"
     }
   ]
-  }
+}

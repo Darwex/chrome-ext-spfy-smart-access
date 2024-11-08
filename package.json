@@ -4,7 +4,8 @@
     "scripts": {
         "lint": "eslint .",
         "build": "vite build",
-        "dev": "vite dev"
+        "dev": "vite dev",
+        "watch-and-build": "node watch-and-build.js"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.280",
@@ -23,5 +24,9 @@
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "description": ""
+    "description": "",
+    "dependencies": {
+        "chokidar": "^4.0.1",
+        "crx-hotreload": "^1.0.6"
+    }
 }
