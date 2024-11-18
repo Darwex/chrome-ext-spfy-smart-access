@@ -2,15 +2,19 @@ import { defineConfig } from "vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import hotReloadExtension from "hot-reload-extension-vite";
 import { resolve } from "path";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        content: resolve(__dirname, "src/content/index.ts"),
+        content: resolve(__dirname, "src/ui-modules/index.tsx"),
         // popup: resolve(__dirname, 'src/pages/popup/index.html'),
         // content: resolve(__dirname, 'src/pages/content/index.ts'),
-        background: resolve(__dirname, "src/background/index.ts"),
+        background: resolve(
+          __dirname,
+          "src/chrome-extension/background/index.ts"
+        ),
         // 'dev-tools': resolve(__dirname, 'src/pages/dev-tools/index.html'),
         // panel: resolve(__dirname, 'src/pages/panel/index.html')
       },
@@ -32,7 +36,8 @@ export default defineConfig({
     }),
     hotReloadExtension({
       log: true,
-      backgroundPath: "src/background/index.ts",
+      backgroundPath: "src/chrome-extension/background/index.ts",
     }),
+    react(),
   ],
 });
