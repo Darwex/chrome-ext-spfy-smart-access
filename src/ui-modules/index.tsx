@@ -9,7 +9,6 @@ const observer = new MutationObserver((mutations, observer) => {
         ?.closest('.Polaris-LegacyCard')
         ?.querySelector('.Polaris-LegacyTabs');
 
-    console.log(polarisTabs);
     if (polarisTabs) {
         ReactDOM.createRoot(polarisTabs).render(
             <React.StrictMode>
