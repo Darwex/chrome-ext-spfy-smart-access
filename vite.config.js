@@ -32,6 +32,10 @@ export default defineConfig({
           src: "manifest.json",
           dest: ".",
         },
+        {
+          src: "src/chrome-extension/assets",
+          dest: ".",
+        },
       ],
     }),
     hotReloadExtension({
