@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button, ButtonGroup, InlineStack, Label } from '@shopify/polaris';
 import { AccessRightsType } from './types';
+import { chainFunctionsWithTimeout } from '../../utils/chainFunctionsWithTimeout';
 
 const checkboxesSelector = '.Polaris-LegacyCard input[type=checkbox]';
-const aclPopoverId = 'acl-popover';
 
 const getCheckBoxes = (
     accessRightsType: AccessRightsType,
@@ -44,24 +44,57 @@ const clearAccessGroups = () => {
     });
 };
 
-const APIKeyACLBlock: React.FC = () => {
+const APIKeyACLBlock: React.FC = (props) => {
     const [accessRightsType, setAccessRightsType] = useState<
         AccessRightsType | null | ''
     >(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (accessRightsType === null) {
             return;
         }
 
-        if (accessRightsType === '') {
-            clearAccessGroups();
-            return;
-        }
+        chainFunctionsWithTimeout([
+            { func: () => setIsLoading(true), timeout: 100 },
+            {
+                func: () => {
+                    if (accessRightsType === '') {
+                        clearAccessGroups();
+                        return;
+                    }
 
-        selectAccessGroups(accessRightsType);
-        console.log(accessRightsType);
+                    selectAccessGroups(accessRightsType);
+                },
+                timeout: 101,
+            },
+            { func: () => setIsLoading(false), timeout: 102 },
+        ]);
     }, [accessRightsType]);
+
+    const accessRightsOptions: {
+        label: string;
+        value: AccessRightsType | '';
+        handler: () => void;
+        tone?: 'success' | 'critical';
+    }[] = [
+        {
+            label: 'All',
+            value: AccessRightsType.WRITE,
+            handler: () => setAccessRightsType(AccessRightsType.WRITE),
+        },
+        {
+            label: 'Read Only',
+            value: AccessRightsType.READ,
+            handler: () => setAccessRightsType(AccessRightsType.READ),
+        },
+        {
+            label: 'Clear',
+            value: '',
+            handler: () => setAccessRightsType(''),
+            tone: 'critical',
+        },
+    ];
 
     return (
         <div
@@ -75,42 +108,23 @@ const APIKeyACLBlock: React.FC = () => {
             }}
         >
             <InlineStack gap="200" blockAlign="center">
-                <Label id="access-rights-label">Select group</Label>
                 <ButtonGroup variant="segmented">
-                    <Button
-                        variant={
-                            accessRightsType === AccessRightsType.WRITE
-                                ? 'primary'
-                                : 'secondary'
-                        }
-                        size="large"
-                        onClick={() =>
-                            setAccessRightsType(AccessRightsType.WRITE)
-                        }
-                    >
-                        All
-                    </Button>
-                    <Button
-                        variant={
-                            accessRightsType === AccessRightsType.READ
-                                ? 'primary'
-                                : 'secondary'
-                        }
-                        onClick={() =>
-                            setAccessRightsType(AccessRightsType.READ)
-                        }
-                        size="large"
-                    >
-                        Read Only
-                    </Button>
-                    <Button
-                        variant="secondary"
-                        size="large"
-                        tone="critical"
-                        onClick={() => setAccessRightsType('')}
-                    >
-                        Clear
-                    </Button>
+                    {accessRightsOptions.map((option) => (
+                        <Button
+                            key={option.value}
+                            variant={
+                                option.value === accessRightsType
+                                    ? 'primary'
+                                    : 'secondary'
+                            }
+                            tone={option.tone}
+                            onClick={option.handler}
+                        >
+                            {isLoading && accessRightsType === option.value
+                                ? 'Executing...'
+                                : option.label}
+                        </Button>
+                    ))}
                 </ButtonGroup>
             </InlineStack>
         </div>
