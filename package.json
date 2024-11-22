@@ -5,6 +5,7 @@
     "lint": "eslint src",
     "dev": "NODE_ENV=development vite build --watch",
     "build": "vite build",
+    "build:prod": "vite build --mode production && zip -r chrome-prod-package/chrome-extension.zip dist",
     "prepare": "husky"
   },
   "type": "module",
