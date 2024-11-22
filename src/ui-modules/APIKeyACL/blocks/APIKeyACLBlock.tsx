@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button, ButtonGroup, InlineStack, Label } from '@shopify/polaris';
+import { Button, ButtonGroup, InlineStack } from '@shopify/polaris';
 import { AccessRightsType } from './types';
 import { chainFunctionsWithTimeout } from '../../utils/chainFunctionsWithTimeout';
 
 const checkboxesSelector = '.Polaris-LegacyCard input[type=checkbox]';
 
-const getCheckBoxes = (
-    accessRightsType: AccessRightsType,
-): HTMLInputElement[] => {
+const getCheckBoxes = (): HTMLInputElement[] => {
     const checkboxes = document.querySelectorAll(
         checkboxesSelector,
     ) as NodeListOf<HTMLInputElement>;
@@ -16,7 +14,7 @@ const getCheckBoxes = (
 };
 
 const selectAccessGroups = (accessRightsType: AccessRightsType) => {
-    const checkboxes = getCheckBoxes(accessRightsType);
+    const checkboxes = getCheckBoxes();
 
     checkboxes.forEach((input) => {
         const inputLabel = input.closest('label')?.textContent;
@@ -44,7 +42,7 @@ const clearAccessGroups = () => {
     });
 };
 
-const APIKeyACLBlock: React.FC = (props) => {
+const APIKeyACLBlock: React.FC = () => {
     const [accessRightsType, setAccessRightsType] = useState<
         AccessRightsType | null | ''
     >(null);
