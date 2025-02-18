@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Admin booster for Shopify",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "App that streamlines working in Shopify admin interface.",
   "permissions": [],
   "content_scripts": [

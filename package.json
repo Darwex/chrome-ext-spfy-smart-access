@@ -6,7 +6,8 @@
     "dev": "NODE_ENV=development vite build --watch",
     "build": "vite build",
     "build:prod": "vite build --mode production && zip -r chrome-prod-package/chrome-extension.zip dist",
-    "prepare": "husky"
+    "prepare": "husky",
+    "publish": "node src/publish-to-chrome-extension-store.js"
   },
   "type": "module",
   "devDependencies": {
@@ -18,11 +19,11 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "hot-reload-extension-vite": "^1.0.13",
+    "husky": "^9.1.7",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
-    "vite-plugin-static-copy": "^2.1.0",
-    "husky": "^9.1.7"
+    "vite-plugin-static-copy": "^2.1.0"
   },
   "parserOptions": {
     "ecmaVersion": 2021
@@ -35,6 +36,7 @@
     "@shopify/polaris": "^13.9.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "chrome-webstore-upload": "^3.1.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   }
