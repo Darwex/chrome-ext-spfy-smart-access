@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "Admin booster for Shopify",
+    "version": "1.0",
+    "description": "App that streamlines working in Shopify admin interface.",
+    "permissions": [],
+    "content_scripts": [
+        {
+            "matches": ["https://admin.shopify.com/store/*"],
+            "js": ["src/content/index.js"]
+        }
+    ],
+    "background": { "service_worker": "src/background/index.js" },
+    "icons": {
+        "16": "assets/icon16.png",
+        "48": "assets/icon48.png",
+        "128": "assets/icon128.png"
+    }
+}

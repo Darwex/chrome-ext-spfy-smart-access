@@ -8,9 +8,10 @@ const observer = new MutationObserver((mutations, observer) => {
     const polarisTabs = document
         ?.querySelector('input[type=search]')
         ?.closest('.Polaris-LegacyCard')
-        ?.querySelector('.Polaris-LegacyTabs');
+        ?.querySelector('.Polaris-LegacyTabs') as HTMLElement;
 
     if (polarisTabs) {
+        polarisTabs.style.position = 'relative';
         ReactDOM.createRoot(polarisTabs).render(
             <React.StrictMode>
                 <AppProvider i18n={en}>
